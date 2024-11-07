@@ -80,11 +80,6 @@
         'Diagram <span class="lower">of the</span> Causes <span class="lower">of</span> Mortality <span class="lower"></br>in the</span> Army <span class="lower">of the</span> East<hr>'
       );
 
-    // Sub-Heading 1:
-    d3.select("#subHeading1")
-      .append("h4")
-      .html("April 1855 - March 1856<hr>");
-
     // Sub-Heading 2:
     d3.select("#subHeading2")
       .append("h4")
@@ -103,13 +98,9 @@
 
       // divide the dataset into two parts April 1854 - March 1855 & April 1855 - March 1856
       var dataAprilToMarch1855 = data.slice(0, 12);
-      var dataAprilToMarch1856 = data.slice(12, 24);
 
       // Create chart for dataset 'aprilToMarch1855'
       createChart(maximumRadius, dataAprilToMarch1855, '#aprilToMarch1855', 'chart1855');
-
-      // Create chart for dataset 'aprilToMarch1856'
-      createChart(maximumRadius, dataAprilToMarch1856, '#aprilToMarch1856', 'chart1856');
 
       // Add description
       d3.select("#aprilToMarch1856")
