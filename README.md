@@ -4,7 +4,7 @@ The repository consists of data visualization for 'Nightingale's Rose Chart' usi
 
 ## Nightingale's Rose Chart
 
-Described as a Coxcomb Chart, Rose Chart or Polar Area Chart.[Read More](https://understandinguncertainty.org/node/214)
+Described as a Coxcomb Chart, Rose Chart or Polar Area Chart.
 
 ## Installation
 
