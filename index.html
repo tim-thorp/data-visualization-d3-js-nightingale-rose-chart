@@ -45,7 +45,7 @@
         </div>
         <div class="col-4">
           <span class="" aria-hidden="true" id="dot3"></span>
-          <span class="fontDot">United States of America</span>
+          <span class="fontDot">USA</span>
         </div>
       </div>
       <div class="row" id="imageContainer">
@@ -149,7 +149,7 @@
     function createChart(radius, data, figureID, chartID) {
       var coxcomb = Chart.coxcomb();
 
-      figure = d3.select(figureID).append("figure");
+      var figure = d3.select(figureID).append("figure");
 
       coxcomb.setParameter('domain', [0, radius]);
       coxcomb.setParameter('angle', function (d) {

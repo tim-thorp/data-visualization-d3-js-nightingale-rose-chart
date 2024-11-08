@@ -13,7 +13,7 @@ Chart.coxcomb = function () {
     };
 
     var legend = ["france", "uk", "usa"];
-    var legendTitle = ["France", "United Kingdom", "United States of America"];
+    var legendTitle = ["France", "United Kingdom", "USA"];
     var delay = 0;
     var duration = 500;
     var height = 600;
