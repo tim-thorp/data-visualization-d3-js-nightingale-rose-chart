@@ -1,188 +1,184 @@
+/* Main Container Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
 #diagramContainer {
     padding-top: 30px;
 }
 
 #imageContainer {
-    background-color: #FFECB3;
-    background-image: url("textured-paper.png");
-    margin-top: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-#legendImage {
-    background-color: #E0E0E0;
-    background-image: url("textured-paper.png");
-}
-
-#diagramContainer h2 hr {
+/* Legend Styles */
+.legend-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
     text-align: center;
-    width: 250px;
-    border: 0;
-    height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
 }
 
-#diagramContainer h4 hr {
-    text-align: center;
-    width: 150px;
-    border: 0;
-    height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+.legend-container h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.2em;
 }
 
+.legend-items {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.france { background-color: #66c2a5; }
+.dot.uk { background-color: #fc8d62; }
+.dot.usa { background-color: #8da0cb; }
+
+.legend-text {
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+/* Heading Styles */
 #heading {
     text-align: center;
-    padding-top: 20px;
+    padding: 20px 0;
 }
 
 #heading h2 {
-    font-family: cursive;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 2em;
 }
 
 #heading .lower {
     text-transform: uppercase;
-    font-size: 20px;
+    font-size: 1.2em;
+    color: #7f8c8d;
 }
 
-#subHeading1 {
-    padding-right: 10%;
-}
-
-#subHeading2 {
-    padding-left: 10%;
-}
-
-#subHeading1, #subHeading2 {
-    text-align: center;
-}
-
-#subHeading1 h4, #subHeading2 h4 {
-    font-family: cursive;
-}
-
-#aprilToMarch1856 figure {
-    /* float: right; */
-    height: 450px;
-}
-
-figure {
+/* Chart Styles */
+#chart {
+    width: 100%;
+    height: 600px;
     position: relative;
-    min-width: 600px;
-    margin-top: -120px;
-    font-family: baskerville, serif;
-}
-
-figure .label {
-    text-transform: uppercase;
-    font-size: 8px;
-    font-weight: 600;
 }
 
 .wedge {
-    stroke: #EEEEEE;
+    stroke: #ffffff;
     stroke-width: 1px;
+    transition: opacity 0.2s ease;
 }
 
+.wedge:hover {
+    opacity: 0.8;
+}
+
+.france { fill: #66c2a5; }
+.uk { fill: #fc8d62; }
+.usa { fill: #8da0cb; }
+
+/* Caption Styles */
 .caption {
-    position: relative;
-    width: 450px;
-    display: block;
-    margin: 0 auto;
-    font-style: oblique;
-    font-size: 14.5px;
-    font-family: cursive;
-    font-weight: 700;
-    padding-bottom: 5%;
+    text-align: center;
+    margin: 20px 0;
+    font-style: italic;
+    color: #34495e;
 }
 
 .caption p {
-    margin: 0;
+    margin: 5px 0;
 }
 
-.caption .shiftLittle {
-    text-indent: 20px;
+.shiftLittle {
+    padding-left: 20px;
 }
 
-figure .france {
-    fill: #66c2a5;
-}
-
-figure .uk {
-    fill: #fc8d62;
-}
-
-figure .usa {
-    fill: #8da0cb;
-}
-
-div.tooltip {
-    position: absolute;
-    text-align: center;
-    width: 200px;
-    height: 25px;
-    padding: 2px;
-    font: 18px baskerville, serif;
-    color: white;
-    background: black;
-    border: 1px;
-    border-radius: 8px;
-    pointer-events: none;
-    text-transform: capitalize;
-}
-
+/* Description Styles */
 #imageDescription {
     text-align: center;
-    margin-top: 5px;
+    margin-top: 30px;
+}
+
+#imageDescription h4 {
+    color: #2c3e50;
+    font-size: 1.4em;
+    margin: 0;
 }
 
 #imageDescriptionLast {
     text-align: center;
-    margin-top: 20px;
-    color: red;
+    margin-top: 15px;
+    color: #e74c3c;
 }
 
-.caption p {
-    overflow: hidden;
-    white-space: nowrap;
-    animation: 
-        typing 2.5s steps(20, end)
+#imageDescriptionLast h5 {
+    font-size: 1.1em;
+    margin: 0;
 }
 
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+/* Tooltip Styles */
+.tooltip {
+    position: absolute;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 100;
+    transition: opacity 0.2s ease;
 }
 
-#legendImage h5 {
-    text-align: center;
-    text-decoration: underline;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    #heading h2 {
+        font-size: 1.5em;
+    }
+
+    .legend-items {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #chart {
+        height: 400px;
+    }
 }
 
-#dot1 {
-    height: 15px;
-    width: 15px;
-    background-color: #66c2a5;
-    border-radius: 50%;
-    display: inline-block;
-  }
+/* Animation for caption */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-  #dot2 {
-    height: 15px;
-    width: 15px;
-    background-color: #fc8d62;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  #dot3 {
-    height: 15px;
-    width: 15px;
-    background-color: #8da0cb;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .fontDot {
-      font-size: 20px;
-  }
+.caption {
+    animation: fadeIn 1s ease-in;
+}

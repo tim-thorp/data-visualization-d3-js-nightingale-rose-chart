@@ -1,179 +1,140 @@
-var Chart = {};
+// Create namespace for the chart
+const BarcelonaChart = {};
 
-Chart.coxcomb = function () {
-    var parameters = {
-        area: function (d) {
-            return [d.y];
-        },
-        angle: function (d) { return d.x; },
-        radiusScale: d3.scaleLinear(),
-        angleScale: d3.scaleLinear().range([Math.PI, 3 * Math.PI]),
-        domain: [0, 1],
-        label: function (d) { return d.label; },
+BarcelonaChart.coxcomb = function() {
+    // Chart parameters
+    const config = {
+        legend: ["france", "uk", "usa"],
+        legendTitle: ["France", "United Kingdom", "USA"],
+        delay: 0,
+        duration: 500,
+        height: 600,
+        width: 600,
+        margin: { top: 50, right: 50, bottom: 50, left: 50 }
     };
 
-    var legend = ["france", "uk", "usa"];
-    var legendTitle = ["France", "United Kingdom", "USA"];
-    var delay = 0;
-    var duration = 500;
-    var height = 600;
-    var width = 600;
-    var margin = { 'top': 10, 'right': 10, 'bottom': 10, 'left': 10 };
-    var canvas, graph, centerX, centerY, numWedges, wedgeGroups, wedges;
+    let canvas, graph, centerX, centerY, numWedges;
 
-    var arc = d3.arc()
+    // Create arc generator
+    const arc = d3.arc()
         .innerRadius(0)
-        .outerRadius(function (d, i) { return parameters.radiusScale(d.radius); })
-        .startAngle(function (d, i) { return parameters.angleScale(d.angle); });
+        .startAngle(d => d.startAngle)
+        .endAngle(d => d.endAngle)
+        .outerRadius(d => d.radius);
 
+    // Main chart function
     function chart(selection) {
-        selection.each(function (data) {
-            numWedges = data.length;
-            data = formatData(data);
-            updateParams();
+        selection.each(function(data) {
             createBase(this);
             createWedges(data);
         });
-    };
+    }
 
-    function formatData(data) {
-        data = data.map(function (d, i) {
-            return {
-                'angle': parameters.angle.call(data, d, i),
-                'area': parameters.area.call(data, d, i),
-                'label': parameters.label.call(data, d, i)
-            };
-        });
-        return data.map(function (d, i) {
-            return {
-                'angle': d.angle,
-                'label': d.label,
-                'radius': d.area.map(function (area) {
-                    return Math.sqrt(area * numWedges / Math.PI);
-                })
-            }
-        })
-    };
-
-    function updateParams() {
-        arc.endAngle(function (d, i) {
-            return parameters.angleScale(d.angle) + (Math.PI / (numWedges / 2));
-        });
-        centerX = (width - margin.left - margin.right) / 2;
-        centerY = (height - margin.top - margin.bottom) / 2;
-
-        parameters.radiusScale.domain(parameters.domain)
-            .range([0, d3.min([centerX, centerY])]);
-
-        parameters.angleScale.domain([0, numWedges]);
-    };
-
+    // Create base SVG function
     function createBase(selection) {
-        canvas = d3.select(selection).append('svg:svg')
-            .attr('width', width)
-            .attr('height', height)
-            .attr('class', 'canvas');
+        d3.select(selection).select('svg').remove();
 
-        graph = canvas.append('svg:g')
+        canvas = d3.select(selection)
+            .append('svg')
+            .attr('width', config.width)
+            .attr('height', config.height)
+            .attr('class', 'canvas')
+            .style('display', 'block')
+            .style('margin', '0 auto');
+
+        centerX = config.width / 2;
+        centerY = config.height / 2;
+
+        graph = canvas.append('g')
             .attr('class', 'graph')
-            .attr('transform', 'translate(' + (centerX + margin.left) + ','
-                + (centerY + margin.top) + ')');
-    };
+            .attr('transform', `translate(${centerX},${centerY})`);
+    }
 
+    // Create wedges function
     function createWedges(data) {
-        wedgeGroups = graph.selectAll('.wedgeGroup')
-            .data(data)
-            .enter().append('svg:g')
-            .attr('class', 'wedgeGroup')
-            .attr('transform', 'scale(0, 0)');
+        numWedges = data.length;
+        const angleSlice = (2 * Math.PI) / numWedges;
 
-        wedges = wedgeGroups.selectAll('.wedge')
-            .data(function (d) {
-                var ids = d3.range(0, legend.length);
+        const maxValue = d3.max(data, d => Math.max(d.france, d.uk, d.usa));
+        const radiusScale = d3.scaleLinear()
+            .domain([0, maxValue])
+            .range([0, Math.min(config.width, config.height) / 2 - Math.max(...Object.values(config.margin))]);
 
-                ids.sort(function (a, b) { return d.radius[b] - d.radius[a]; });
+        const wedgeData = [];
+        data.forEach((d, i) => {
+            const startAngle = i * angleSlice;
+            const monthValues = config.legend.map(country => ({
+                startAngle: startAngle,
+                endAngle: startAngle + angleSlice,
+                radius: radiusScale(d[country]),
+                value: d[country],
+                country: country,
+                countryTitle: config.legendTitle[config.legend.indexOf(country)],
+                month: d.month
+            }));
 
-                return ids.map(function (i) {
-                    return {
-                        'legend': legend[i],
-                        'radius': d.radius[i],
-                        'angle': d.angle,
-                        'legendTitle': legendTitle[i]
-                    };
-                });
-            })
-            .enter().append('svg:path')
-            .attr('class', function (d) { return 'wedge ' + d.legend; })
+            monthValues.sort((a, b) => b.value - a.value);
+            wedgeData.push(...monthValues);
+        });
+
+        const wedges = graph.selectAll('.wedge')
+            .data(wedgeData)
+            .enter()
+            .append('path')
+            .attr('class', d => `wedge ${d.country}`)
             .attr('d', arc);
 
-        wedges.on("mouseover", function (d) {
-            div.transition()
+        wedges.on('mouseover', function(event, d) {
+            const tooltip = d3.select('body')
+                .append('div')
+                .attr('class', 'tooltip')
+                .style('opacity', 0);
+
+            tooltip.transition()
                 .duration(200)
-                .style("opacity", .9);
-            div.html(d.legendTitle + ':  ' + Math.floor(Math.pow(d.radius, 2) * Math.PI / numWedges))
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
+                .style('opacity', 0.9);
+
+            tooltip.html(`${d.countryTitle} - ${d.month}: ${d.value.toLocaleString()} visitors`)
+                .style('left', `${event.pageX + 10}px`)
+                .style('top', `${event.pageY - 28}px`);
+
+            d3.select(this)
+                .style('opacity', 0.8);
         })
-            .on("mouseout", function (d) {
-                div.transition()
-                    .duration(500)
-                    .style("opacity", 0);
+            .on('mouseout', function() {
+                d3.selectAll('.tooltip').remove();
+                d3.select(this)
+                    .style('opacity', 1);
             });
 
-        wedgeGroups.transition()
-            .delay(delay)
-            .duration(function (d, i) {
-                return duration * i;
+        graph.selectAll('.month-label')
+            .data(data)
+            .enter()
+            .append('text')
+            .attr('class', 'month-label')
+            .attr('transform', (d, i) => {
+                const angle = i * angleSlice + angleSlice / 2;
+                const radius = Math.min(config.width, config.height) / 2 - 20;
+                const x = Math.sin(angle) * radius;
+                const y = -Math.cos(angle) * radius;
+                return `translate(${x},${y})`;
             })
-            .attr('transform', 'scale(1, 1)');
-
-        var numLabels = d3.selectAll('.label-path').size();
-
-        wedgeGroups.selectAll('.label-path')
-            .data(function (d, i) {
-                return [{
-                    'index': i,
-                    'angle': d.angle,
-                    'radius': d3.max(d.radius.concat([23]))
-                }];
-            })
-            .enter().append('svg:path')
-            .attr('class', 'label-path')
-            .attr('id', function (d) {
-                return 'label-path' + (d.index + numLabels);
-            })
-            .attr('d', arc)
-            .attr('fill', 'none')
-            .attr('stroke', 'none');
-
-        wedgeGroups.selectAll('.label')
-            .data(function (d, i) {
-                return [{
-                    'index': i,
-                    'label': d.label
-                }];
-            })
-            .enter().append('svg:text')
-            .attr('class', 'label')
-            .attr('text-anchor', 'start')
-            .attr('x', 5)
-            .attr('dy', '-.71em')
-            .attr('text-align', 'center')
-            .append('textPath')
-            .attr('xlink:href', function (d, i) {
-                return '#label-path' + (d.index + numLabels);
-            })
-            .text(function (d) { return d.label; });
-
-    };
-
-    chart.setParameter = function (param, value) {
-        if (!_.isEmpty(param)) {
-            _.set(parameters, param, value);
-            return chart;
-        }
-    };
+            .attr('text-anchor', 'middle')
+            .attr('dominant-baseline', 'middle')
+            .style('font-size', '12px')
+            .text(d => d.month);
+    }
 
     return chart;
 };
 
+// Initialize chart with data from CSV
+document.addEventListener('DOMContentLoaded', async function() {
+    const response = await fetch('nightingale-data.csv');
+    const csvText = await response.text();
+    const data = d3.csvParse(csvText);
+    const chart = BarcelonaChart.coxcomb();
+    d3.select('#chart')
+        .datum(data)
+        .call(chart);
+});
