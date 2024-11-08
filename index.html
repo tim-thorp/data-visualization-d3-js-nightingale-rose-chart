@@ -33,19 +33,19 @@
     <div class="container" id="diagramContainer">
       <div class="row" id="legendImage">
         <div class="col-12">
-          <h5>Causes of Mortality</h5>
+          <h5>Country of Origin</h5>
         </div>
         <div class="col-4">
           <span class="" aria-hidden="true" id="dot1"></span>
-          <span class="fontDot">Zymotic Disease</span>
+          <span class="fontDot">France</span>
         </div>
         <div class="col-4">
           <span class="" aria-hidden="true" id="dot2"></span>
-          <span class="fontDot">Wounds & Injuries</span>
+          <span class="fontDot">United Kingdom</span>
         </div>
         <div class="col-4">
           <span class="" aria-hidden="true" id="dot3"></span>
-          <span class="fontDot">All Other Causes</span>
+          <span class="fontDot">United States of America</span>
         </div>
       </div>
       <div class="row" id="imageContainer">
@@ -113,14 +113,12 @@
 
     // function to format date
     function formatDate(data) {
-      var dateTimeParse = d3.timeParse("%b %Y");
-      var yearLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-      data.forEach(function (d) {
-        d.date = dateTimeParse(d.month);
-        d.label = yearLabels[d.date.getMonth()];
+      data.forEach(function(d) {
+        // The month name is already the label
+        d.label = d.month;
+        // Create a date object (using any year since we only care about months)
+        d.date = new Date(2024, d.month === 'January' ? 0 : new Date(`${d.month} 1, 2024`).getMonth());
       });
-
       return data;
     }
 
@@ -136,7 +134,7 @@
     // function to return maximum value from death type
     function getMaximumValue(data) {
       maximumValue = d3.max(data, function (d) {
-        return d3.max([parseFloat(d.diseases_mortality), parseFloat(d.wounds_mortality), parseFloat(d.others_mortality)]);
+        return d3.max([parseFloat(d.france), parseFloat(d.uk), parseFloat(d.usa)]);
       });
 
       return maximumValue;
@@ -158,7 +156,7 @@
         return d.date.getMonth();
       });
       coxcomb.setParameter('area', function (d, i) {
-        return [parseFloat(d.diseases_mortality), parseFloat(d.wounds_mortality), parseFloat(d.others_mortality)];
+        return [parseFloat(d.france), parseFloat(d.uk), parseFloat(d.usa)];
       });
 
       // Bind the data and generate a new chart

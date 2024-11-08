@@ -12,8 +12,8 @@ Chart.coxcomb = function () {
         label: function (d) { return d.label; },
     };
 
-    var legend = ["disease", "wounds", "other"];
-    var legendTitle = ["Zymotic diseases", "Wounds & injuries", "All other causes"];
+    var legend = ["france", "uk", "usa"];
+    var legendTitle = ["France", "United Kingdom", "United States of America"];
     var delay = 0;
     var duration = 500;
     var height = 600;
@@ -105,12 +105,6 @@ Chart.coxcomb = function () {
             .enter().append('svg:path')
             .attr('class', function (d) { return 'wedge ' + d.legend; })
             .attr('d', arc);
-
-        // wedges.append('svg:title')
-        //     .text(function (d) {
-        //         return d.legendTitle + ': '
-        //             + Math.floor(Math.pow(d.radius, 2) * Math.PI / numWedges);
-        //     });
 
         wedges.on("mouseover", function (d) {
             div.transition()

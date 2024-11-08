@@ -104,22 +104,15 @@ figure .label {
     text-indent: 20px;
 }
 
-figure .disease {
-	animation-name: color_change_disease;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-}
-
-figure .disease {
+figure .france {
     fill: #1976D2;
 }
 
-figure .wounds {
+figure .uk {
     fill: #D81B60;
 }
 
-figure .other {
+figure .usa {
     fill: #000000;
 }
 
