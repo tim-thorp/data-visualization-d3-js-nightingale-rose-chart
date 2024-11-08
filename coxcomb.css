@@ -79,18 +79,6 @@ figure .label {
     font-weight: 600;
 }
 
-/* figure .disease {
-    fill:#64B5F6;
-} */
-
-/* figure .other {
-    fill:#212121;
-} */
-
-/* figure .wounds {
-    fill: #F48FB1;
-} */
-
 .wedge {
     stroke: #EEEEEE;
     stroke-width: 1px;
@@ -123,129 +111,16 @@ figure .disease {
 	animation-direction: alternate;
 }
 
-@-webkit-keyframes color_change_disease {
-	0% { fill: #64B5F6; }
-    25% { fill: #42A5F5; }
-    50% { fill: #2196F3; }
-    75% { fill: #1E88E5; }
-    100% { fill: #1976D2; }
-}
-
-@-moz-keyframes color_change_disease {
-	0% { fill: #64B5F6; }
-    25% { fill: #42A5F5; }
-    50% { fill: #2196F3; }
-    75% { fill: #1E88E5; }
-    100% { fill: #1976D2; }
-}
-@-ms-keyframes color_change_disease {
-	0% { fill: #64B5F6; }
-    25% { fill: #42A5F5; }
-    50% { fill: #2196F3; }
-    75% { fill: #1E88E5; }
-    100% { fill: #1976D2; }
-}
-@-o-keyframes color_change_disease {
-	0% { fill: #64B5F6; }
-    25% { fill: #42A5F5; }
-    50% { fill: #2196F3; }
-    75% { fill: #1E88E5; }
-    100% { fill: #1976D2; }
-}
-@keyframes color_change_disease {
-	0% { fill: #64B5F6; }
-    25% { fill: #42A5F5; }
-    50% { fill: #2196F3; }
-    75% { fill: #1E88E5; }
-    100% { fill: #1976D2; }
+figure .disease {
+    fill: #1976D2;
 }
 
 figure .wounds {
-	animation-name: color_change_wounds;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-}
-
-@-webkit-keyframes color_change_wounds {
-	0% { fill: #F48FB1; }
-    25% { fill: #F06292; }
-    50% { fill: #EC407A; }
-    75% { fill: #E91E63; }
-    100% { fill: #D81B60; }
-}
-
-@-moz-keyframes color_change_wounds {
-	0% { fill: #F48FB1; }
-    25% { fill: #F06292; }
-    50% { fill: #EC407A; }
-    75% { fill: #E91E63; }
-    100% { fill: #D81B60; }
-}
-@-ms-keyframes color_change_wounds {
-	0% { fill: #F48FB1; }
-    25% { fill: #F06292; }
-    50% { fill: #EC407A; }
-    75% { fill: #E91E63; }
-    100% { fill: #D81B60; }
-}
-@-o-keyframes color_change_wounds {
-	0% { fill: #F48FB1; }
-    25% { fill: #F06292; }
-    50% { fill: #EC407A; }
-    75% { fill: #E91E63; }
-    100% { fill: #D81B60; }
-}
-@keyframes color_change_wounds {
-	0% { fill: #F48FB1; }
-    25% { fill: #F06292; }
-    50% { fill: #EC407A; }
-    75% { fill: #E91E63; }
-    100% { fill: #D81B60; }
+    fill: #D81B60;
 }
 
 figure .other {
-	animation-name: color_change_other;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-}
-
-@-webkit-keyframes color_change_other {
-	0% { fill: #757575; }
-    25% { fill: #616161; }
-    50% { fill: #424242; }
-    75% { fill: #212121; }
-    100% { fill: #000000; }
-}
-
-@-moz-keyframes color_change_other {
-	0% { fill: #757575; }
-    25% { fill: #616161; }
-    50% { fill: #424242; }
-    75% { fill: #212121; }
-    100% { fill: #000000; }
-}
-@-ms-keyframes color_change_other {
-	0% { fill: #757575; }
-    25% { fill: #616161; }
-    50% { fill: #424242; }
-    75% { fill: #212121; }
-    100% { fill: #000000; }
-}
-@-o-keyframes color_change_other {
-	0% { fill: #757575; }
-    25% { fill: #616161; }
-    50% { fill: #424242; }
-    75% { fill: #212121; }
-    100% { fill: #000000; }
-}
-@keyframes color_change_other {
-	0% { fill: #757575; }
-    25% { fill: #616161; }
-    50% { fill: #424242; }
-    75% { fill: #212121; }
-    100% { fill: #000000; }
+    fill: #000000;
 }
 
 div.tooltip {
