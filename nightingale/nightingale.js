@@ -130,7 +130,7 @@ BarcelonaChart.coxcomb = function() {
 
 // Initialize chart with data from CSV
 document.addEventListener('DOMContentLoaded', async function() {
-    const response = await fetch('nightingale-data.csv');
+    const response = await fetch('nightingale.csv');
     const csvText = await response.text();
     const data = d3.csvParse(csvText);
     const chart = BarcelonaChart.coxcomb();
