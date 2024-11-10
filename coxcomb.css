@@ -182,3 +182,22 @@
 .caption {
     animation: fadeIn 1s ease-in;
 }
+
+/* Source Citation Styles */
+.source-citation {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #7f8c8d;
+}
+
+.source-citation a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.source-citation a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
